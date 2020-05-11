@@ -1,0 +1,10 @@
+支持向量机（SVM）从入门到放弃再到掌握
+https://blog.csdn.net/b285795298/article/details/81977271
+
+支持向量机（SVM）——原理篇:
+https://zhuanlan.zhihu.com/p/31886934
+
+看了这篇文章你还不懂SVM你就来打我：
+https://zhuanlan.zhihu.com/p/49331510
+
+
