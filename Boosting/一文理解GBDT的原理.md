@@ -85,13 +85,13 @@ $$f(x+\Delta x) \approx f(x) + f'(x)\Delta x + \frac12 f''(x)\Delta x^2 \tag{2}$
 
 那么在等式（1）中，我们把 $\hat{y}_i^{t-1}$ 看成是等式（2）中的x， $f_t(x_i)$ 看成是 $\Delta x$ ，因此等式（1）可以写成：
 
-$Obj^{(t)} = \sum_{i=1}^n \left[ l(y_i, \hat{y}_i^{t-1}) + g_if_t(x_i) + \frac12h_if_t^2(x_i) \right] + \Omega(f_t) + constant \tag 3$
+$$Obj^{(t)} = \sum_{i=1}^n \left[ l(y_i, \hat{y}_i^{t-1}) + g_if_t(x_i) + \frac12h_if_t^2(x_i) \right] + \Omega(f_t) + constant \tag 3$$
 
 其中 $g_{i}$ 为损失函数的一阶导， $h_{i}$ 为损失函数的二阶导，注意这里的导是对 $\hat{y}_i^{t-1}$ 求导。我们以 平方损失函数为例$\sum_{i=1}^n \left(y_i - (\hat{y}_i^{t-1} + f_t(x_i)) \right)^2$ ，则 $g_i=\partial_{\hat{y}^{t-1}}(\hat{y}^{t-1} - y_i)^2 = 2(\hat{y}^{t-1} - y_i)$， $h_i=\partial_{\hat{y}^{t-1}}^2(\hat{y}^{t-1} - y_i)^2 = 2$ 。
 
 由于在第t步 $\hat{y}_i^{t-1}$ 其实是一个已知的值，所以 $ l(y_i, \hat{y}_i^{t-1})$ 是一个常数，其对函数优化不会产生影响，因此，等式（3）可以写成：
 
-$Obj^{(t)} \approx \sum_{i=1}^n \left[ g_if_t(x_i) + \frac12h_if_t^2(x_i) \right] + \Omega(f_t) \tag 4$
+$$Obj^{(t)} \approx \sum_{i=1}^n \left[ g_if_t(x_i) + \frac12h_if_t^2(x_i) \right] + \Omega(f_t) \tag 4$$
 
 所以我么只要求出每一步损失函数的一阶和二阶导的值（由于前一步的 $\hat{y}^{t-1}$ 是已知的，所以这两个值就是常数）代入等式4，然后最优化目标函数，就可以得到每一步的 $f(x)$ ，最后根据加法模型得到一个整体模型。
 
@@ -105,7 +105,7 @@ $Obj^{(t)} \approx \sum_{i=1}^n \left[ g_if_t(x_i) + \frac12h_if_t^2(x_i) \right
 
 我们假设 $I_j=\{ i \vert q(x_i)=j \}$ 为第 $j$ 个叶子节点的样本集合，则等式4根据上面的一些变换可以写成：
 
-$\begin{split} Obj^{(t)} &\approx \sum_{i=1}^n \left[ g_if_t(x_i) + \frac12h_if_t^2(x_i) \right] + \Omega(f_t) \\ &= \sum_{i=1}^n \left[ g_iw_{q(x_i)} + \frac12h_iw_{q(x_i)}^2 \right] + \gamma T + \frac12 \lambda \sum_{j=1}^T w_j^2 \\ &= \sum_{j=1}^T \left[(\sum_{i \in I_j}g_i)w_j + \frac12(\sum_{i \in I_j}h_i + \lambda)w_j^2 \right] + \gamma T \end{split}\tag 5$
+$$Obj^{(t)} \approx \sum_{i=1}^n \left[ g_if_t(x_i) + \frac12h_if_t^2(x_i) \right] + \Omega(f_t) \\ = \sum_{i=1}^n \left[ g_iw_{q(x_i)} + \frac12h_iw_{q(x_i)}^2 \right] + \gamma T + \frac12 \lambda \sum_{j=1}^T w_j^2 \\ = \sum_{j=1}^T \left[(\sum_{i \in I_j}g_i)w_j + \frac12(\sum_{i \in I_j}h_i + \lambda)w_j^2 \right] + \gamma T \tag 5$$
 
 即我们之前样本的集合，现在都改写成叶子结点的集合，由于一个叶子结点有多个样本存在，因此才有了 $\sum_{i \in I_j}g_i$ 和 $\sum_{i \in I_j}h_i$ 这两项。
 
@@ -115,11 +115,11 @@ $Obj^{(t)} = \sum_{j=1}^T \left[G_jw_j + \frac12(H_j + \lambda)w_j^2 \right] + \
 
 如果树的结构是固定的，即 $q$ 是确定的，或者说我们已经知道了每个叶子结点有哪些样本，所以 $G_j$ 和 $H_j$ 是确定的，但 $w$ 不确定（ $w$ 其实就是我们需要预测的值），那么令目标函数一阶导为0，则可以求得叶子结点 $j$ 对应的值：
 
-$w_j^*=-\frac{G_j}{H_j+\lambda} \tag 6$
+$$w_j^*=-\frac{G_j}{H_j+\lambda} \tag 6$$
 
 目标函数的值可以化简为：
 
-$Obj = -\frac12 \sum_{j=1}^T \frac{G_j^2}{H_j+\lambda} + \gamma T \tag 7$
+$$Obj = -\frac12 \sum_{j=1}^T \frac{G_j^2}{H_j+\lambda} + \gamma T \tag 7$$
 
 ## 7、如何最优化目标函数
 
@@ -143,7 +143,7 @@ d、回到第1步，递归执行到满足特定条件为止
 
 那么如何计算上面的收益呢，很简单，仍然紧扣目标函数就可以了。假设我们在某一节点上二分裂成两个节点，分别是左（L）右（R），则分列前的目标函数是 $-\frac12 [\frac{(G_L+G_R)^2}{H_L+H_R+\lambda}] + \gamma $ ，分裂后则是 $-\frac12 [ \frac{G_L^2}{H_L+\lambda} + \frac{G_R^2}{H_R+\lambda}] +2\gamma$ ，则对于目标函数来说，分裂后的收益是（这里假设是最小化目标函数，所以用分裂前-分裂后）：
 
-$Gain=\frac12 \left[ \frac{G_L^2}{H_L+\lambda} + \frac{G_R^2}{H_R+\lambda} - \frac{(G_L+G_R)^2}{H_L+H_R+\lambda}\right] - \gamma \tag 8$
+$$Gain=\frac12 \left[ \frac{G_L^2}{H_L+\lambda} + \frac{G_R^2}{H_R+\lambda} - \frac{(G_L+G_R)^2}{H_L+H_R+\lambda}\right] - \gamma \tag 8$$
 
 等式8计算出来的收益，也是作为变量重要度输出的重要依据。
 
@@ -161,15 +161,6 @@ d、把新生成的决策树 $f_t(x)$ 加入 $\hat{y}_i^t = \hat{y}_i^{t-1} + \e
 
 
 
-
-
-
-```
-https://zhuanlan.zhihu.com/p/20794583
-https://zhuanlan.zhihu.com/p/30339807
-https://zhuanlan.zhihu.com/p/81368182
-https://www.zhihu.com/question/41354392/answer/98658997
-```
 
 
 
